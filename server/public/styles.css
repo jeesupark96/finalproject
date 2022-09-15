@@ -1,0 +1,95 @@
+#modal {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.middle {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 20px;
+  width: 50rem;
+  height: 60%;
+  position: absolute;
+  justify-content: center;
+  top: 5rem;
+}
+
+.newrow {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border: solid black;
+  align-items: flex-start;
+  align-content: center;
+}
+
+.description {
+  width: 200px;
+  height: 200px;
+}
+
+.btn-primary {
+  border-top: 90px;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+body {
+  width: 100%;
+  background-image: url("https://www.growthtelligent.com/x/cdn/?https://storage.googleapis.com/gator-users/user-594589/images/4603cab45c3b4a80b2a237a102342041/alexis-balinoff-2KIDkMzmO-k-unsplash.jpg");
+}
+
+.search {
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 400px;
+  z-index: 10;
+  list-style-type: none;
+}
+
+.search input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+  list-style-type: none;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.white {
+  background-color: white;
+  list-style-type: none;
+}
+
+.locate {
+  position: absolute;
+  top: 4rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  z-index: 10;
+}
+
+.locate img {
+  width: 50px;
+  cursor: pointer;
+}
+
+.pt-5 {
+  top: 100px;
+}
+
+.cardborder {
+  top: 80px;
+}
