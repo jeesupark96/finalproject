@@ -1,0 +1,23 @@
+                                   List of databases
+         Name         |  Owner   | Encoding | Collate |  Ctype  |   Access privileges   
+----------------------+----------+----------+---------+---------+-----------------------
+ all-actors.sql       | dev      | UTF8     | C.UTF-8 | C.UTF-8 | 
+ apiAuthentication    | dev      | UTF8     | C.UTF-8 | C.UTF-8 | 
+ apiAuthorization     | dev      | UTF8     | C.UTF-8 | C.UTF-8 | 
+ apiRegistration      | dev      | UTF8     | C.UTF-8 | C.UTF-8 | 
+ dev                  | dev      | UTF8     | C.UTF-8 | C.UTF-8 | 
+ expressErrorHandling | dev      | UTF8     | C.UTF-8 | C.UTF-8 | 
+ fetchInReactPractice | dev      | UTF8     | C.UTF-8 | C.UTF-8 | 
+ final-project-spot   | dev      | UTF8     | C.UTF-8 | C.UTF-8 | 
+ pagila               | dev      | UTF8     | C.UTF-8 | C.UTF-8 | 
+ postgres             | postgres | UTF8     | C.UTF-8 | C.UTF-8 | 
+ reactContext         | dev      | UTF8     | C.UTF-8 | C.UTF-8 | 
+ reactFileUploads     | dev      | UTF8     | C.UTF-8 | C.UTF-8 | 
+ reactHashRouting     | dev      | UTF8     | C.UTF-8 | C.UTF-8 | 
+ studentGradeTable    | dev      | UTF8     | C.UTF-8 | C.UTF-8 | 
+ template0            | postgres | UTF8     | C.UTF-8 | C.UTF-8 | =c/postgres          +
+                      |          |          |         |         | postgres=CTc/postgres
+ template1            | postgres | UTF8     | C.UTF-8 | C.UTF-8 | =c/postgres          +
+                      |          |          |         |         | postgres=CTc/postgres
+(16 rows)
+
