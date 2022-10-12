@@ -1,5 +1,6 @@
 import React from 'react';
-import Home from './pages/home';
+import Catalog from './pages/home';
+import PostCard from './pages/card';
 import { parseRoute } from './lib';
 import Map from './pages/map';
 import NewEntry from './pages/new-entry';
@@ -24,7 +25,7 @@ export default class App extends React.Component {
     const { route } = this.state;
 
     if (route.path === 'home') {
-      return <Home />;
+      return <Catalog />;
     }
     if (route.path === 'map') {
       return <Map />;

@@ -74,7 +74,7 @@ Hello
   return (
 
   <div>
-    <Header />
+
     <Search panTo={panTo}/>
     <Locate panTo={panTo} />
 

@@ -18,9 +18,8 @@ export default function PostCard(props) {
                 src={props.photoUrl}>
               </Image>
             </Container>
-            <Container className='art-info'>
+            <Container className='spot-info'>
               <Card.Title
-                as='h4'
                 className={
                   `head-text pri-color py-2 ${props.reported === true
                     ? 'me-5'
@@ -36,7 +35,7 @@ export default function PostCard(props) {
                 {props.title}
               </Card.Title>
               <Card.Text className='fw-bold pri-color pin-text'>
-                Title: {props.firstName}
+                Title: {props.eventName}
                 {props.saved === null
                   ? null
                   : <i className='absolute-right sec-color fas fa-heart fa-lg ms-2'></i>}
