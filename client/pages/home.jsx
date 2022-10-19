@@ -6,42 +6,57 @@ export default class Catalog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      spots: []
+      spots: [],
+      users: []
     };
   }
 
   componentDidMount() {
     fetch('/api/spots')
       .then(res => res.json())
-      .then(spots => this.setState({ spots }))
+      .then(spots =>
+
+        this.setState({ spots }))
+
+      .catch(err => {
+        console.log('Error Reading Data' + err);
+      });
+
+    fetch('api/users')
+      .then(res => res.json())
+      .then(users =>
+        console.log(users)
+        // this.setState({ users }))
+      )
       .catch(err => {
         console.log('Error Reading Data' + err);
       });
   }
 
   render() {
-    const { spot } = this.state;
+    const { spots } = this.state;
     const { user } = this.context;
     return (
       <Container className='feed-cont'>
         <Row className='pt-5'>
           <Col>
-            {spot => (
+            {spots.map(spots => (
               <PostCard
-                key={spot.postId}
-                title={spot.eventName}
-                photoUrl={spot.photoUrl}
-                userName={spot.firstName}
+                key={spots.spotId}
+                title={spots.eventName}
+                photoUrl={spots.photoUrl}
+                description={spots.description}
+                userName={spots.userId}
                 button='View More'
-                href={`#pins?postId=${spot.postId}`}
-                saver={spot.saver}
-                userId={user.userId}
-                reported={spot.reported}
+                href={`#pins?postId=${spots.postId}`}
+                saver={spots.saver}
+                reported={spots.reported}
               />
-            )}
+            ))}
           </Col>
         </Row>
       </Container>
     );
+
   }
 }

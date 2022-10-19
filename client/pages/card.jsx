@@ -13,10 +13,7 @@ export default function PostCard(props) {
         <Card.Body className='pt-2'>
           <Container className='d-flex px-0'>
             <Container className='img-cont' >
-              <Image
-                className='profile-pic sec-bk-color'
-                src={props.photoUrl}>
-              </Image>
+
             </Container>
             <Container className='spot-info'>
               <Card.Title
@@ -32,14 +29,22 @@ export default function PostCard(props) {
                     <i className='ms-1 fas fa-eye-slash fa-sm'></i>
                   </span>
                   : null}
-                {props.title}
+                {props.userName}
               </Card.Title>
+
               <Card.Text className='fw-bold pri-color pin-text'>
-                Title: {props.eventName}
+                Title: {props.title}
                 {props.saved === null
                   ? null
                   : <i className='absolute-right sec-color fas fa-heart fa-lg ms-2'></i>}
               </Card.Text>
+              <Card.Text>
+                {props.description}
+              </Card.Text>
+              <Image
+                className='profile-pic sec-bk-color'
+                src={props.photoUrl}>
+              </Image>
             </Container>
           </Container>
           <Container className='d-grid'>
