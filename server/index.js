@@ -8,17 +8,38 @@ const app = express();
 
 app.use(staticMiddleware);
 
-// app.get('/api/spots', (req, res, next) => {
+app.get('/api/spots', (req, res, next) => {
+  const sql = `
+   select
+     "s"."spotId",
+     "s"."eventName",
+     "s"."description",
+     "s"."photoUrl",
+     "s"."createdAt",
+     "s"."userId" as "name",
+     "u"."firstName",
+     "u"."userId",
+     "s"."lat",
+     "s"."lng"
+   from "spots" as "s"
+   join "users" as "u" using ("userId")
+   order by "createdAt" DESC, "userId" DESC;
+ `;
+  db.query(sql)
+    .then(response =>
+      res.json(response.rows))
+    .catch(err => next(err));
+});
+//
+// app.get('/api/users', (req, res, next) => {
 //  const sql = `
 //    select
-//      "spotId",
-//      "eventName",
-//      "description",
-//      "photoUrl",
-//      "createdAt",
-//      "userId"
-//    from "spots"
-//    order by "createdAt" DESC, "spotId" DESC;
+//      "userId",
+//      "firstName",
+//       "lastName",
+//      "createdAt"
+//    from "users"
+//    order by "createdAt" DESC, "userId" DESC;
 //  `;
 //
 //  db.query(sql)
@@ -26,24 +47,7 @@ app.use(staticMiddleware);
 //      res.json(response.rows))
 //    .catch(err => next(err));
 // });
-
-app.get('/api/users', (res, next) => {
-  const sql = `
-    select
-      "userId",
-      "firstName",
-       "lastName",
-      "createdAt"
-    from "users"
-    order by "createdAt" DESC, "userId" DESC;
-  `;
-
-  db.query(sql)
-    .then(response =>
-      res.json(response.rows))
-    .catch(err => next(err));
-});
-
+//
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

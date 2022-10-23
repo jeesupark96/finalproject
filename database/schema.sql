@@ -20,7 +20,8 @@ CREATE TABLE "spots" (
     "description" TEXT NOT NULL,
     "createdAt" timestamptz NOT NULL default now(),
     "photoUrl" text NOT NULL,
-    "mapLocation" TEXT NOT NULL,
+    "lat" TEXT NOT NULL,
+    "lng" TEXT NOT NULL,
     CONSTRAINT "spots_pk" PRIMARY KEY ("spotId")
 ) WITH (
   OIDS=FALSE

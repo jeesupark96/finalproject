@@ -6,12 +6,12 @@ export default function PostCard(props) {
     <>
       <Card>
         <Card.Img
-          style={{ width: '100vw', maxHeight: '55vh', objectFit: 'cover' }}
+          style={{ width: '20px', maxHeight: '55vh', objectFit: 'cover' }}
           className='img-fluid'
           variant='top'
-          src={props.firstName} />
+          src={props.firstName}/>
         <Card.Body className='pt-2'>
-          <Container className='d-flex px-0'>
+          <Container className='d-flex px-0 container'>
             <Container className='img-cont' >
 
             </Container>
@@ -23,20 +23,13 @@ export default function PostCard(props) {
                     : ''}`
                 }
               >
-                {props.reported === true
-                  ? <span className='warning absolute-right'>
-                    <i className='fas fa-exclamation fa-sm'></i>
-                    <i className='ms-1 fas fa-eye-slash fa-sm'></i>
-                  </span>
-                  : null}
+                {props.reported === true}
                 {props.userName}
               </Card.Title>
 
               <Card.Text className='fw-bold pri-color pin-text'>
                 Title: {props.title}
-                {props.saved === null
-                  ? null
-                  : <i className='absolute-right sec-color fas fa-heart fa-lg ms-2'></i>}
+                {props.saved === null}
               </Card.Text>
               <Card.Text>
                 {props.description}
@@ -48,7 +41,7 @@ export default function PostCard(props) {
             </Container>
           </Container>
           <Container className='d-grid'>
-            <Button size='lg' className='mt-3' href={props.href}>
+            <Button size='med' className='mt-2' href={'#map' + props.href}>
               {props.button}
             </Button>
           </Container>

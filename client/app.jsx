@@ -5,6 +5,7 @@ import { parseRoute } from './lib';
 import Map from './pages/map';
 import NewEntry from './pages/new-entry';
 import Header from './pages/navbar';
+import SpotFinder from './pages/spot-finder';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -28,7 +29,7 @@ export default class App extends React.Component {
       return <Catalog />;
     }
     if (route.path === 'map') {
-      return <Map />;
+      return <SpotFinder />;
     }
     if (route.path === 'newentry') {
       return <NewEntry/>;

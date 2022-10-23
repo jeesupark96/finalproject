@@ -6,28 +6,17 @@ export default class Catalog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      spots: [],
-      users: []
+      spots: []
     };
   }
 
   componentDidMount() {
+
     fetch('/api/spots')
       .then(res => res.json())
       .then(spots =>
 
         this.setState({ spots }))
-
-      .catch(err => {
-        console.log('Error Reading Data' + err);
-      });
-
-    fetch('api/users')
-      .then(res => res.json())
-      .then(users =>
-        console.log(users)
-        // this.setState({ users }))
-      )
       .catch(err => {
         console.log('Error Reading Data' + err);
       });
@@ -35,20 +24,19 @@ export default class Catalog extends React.Component {
 
   render() {
     const { spots } = this.state;
-    const { user } = this.context;
     return (
       <Container className='feed-cont'>
         <Row className='pt-5'>
           <Col>
             {spots.map(spots => (
               <PostCard
-                key={spots.spotId}
+                key={spots.userId}
                 title={spots.eventName}
                 photoUrl={spots.photoUrl}
                 description={spots.description}
-                userName={spots.userId}
+                userName={spots.firstName}
                 button='View More'
-                href={`#pins?postId=${spots.postId}`}
+                href={`${spots.spotId}`}
                 saver={spots.saver}
                 reported={spots.reported}
               />
