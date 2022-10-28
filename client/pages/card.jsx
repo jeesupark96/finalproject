@@ -1,10 +1,17 @@
 import React from 'react';
 import { Card, Button, Image, Container } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 
 export default function PostCard(props) {
+
   return (
     <>
       <Card>
+        <div>
+          <FontAwesomeIcon icon={(faBookmark)} />
+
+          </div>
         <Card.Img
           style={{ width: '20px', maxHeight: '55vh', objectFit: 'cover' }}
           className='img-fluid'
@@ -13,7 +20,6 @@ export default function PostCard(props) {
         <Card.Body className='pt-2'>
           <Container className='d-flex px-0 container'>
             <Container className='img-cont' >
-
             </Container>
             <Container className='spot-info'>
               <Card.Title
@@ -41,7 +47,7 @@ export default function PostCard(props) {
             </Container>
           </Container>
           <Container className='d-grid'>
-            <Button size='med' className='mt-2' href={'#map' + props.href}>
+            <Button size='med' className='mt-4 w-40' href={`#spots?spotId=${props.href}`}>
               {props.button}
             </Button>
           </Container>

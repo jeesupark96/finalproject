@@ -99,8 +99,14 @@ ul {
   display: flex;
   flex-wrap: wrap;
   align-content: space-around;
+  margin: 50px;
 }
 
 .map {
   height: 1000px;
+}
+
+.info-img {
+  height: 200px;
+  width: 300px;
 }

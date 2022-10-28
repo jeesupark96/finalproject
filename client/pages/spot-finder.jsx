@@ -9,7 +9,7 @@ import {
   InfoWindow
 } from '@react-google-maps/api';
 
-const center = { lat: 36.7783, lng: -119.4179 };
+const center = { lat: 34.0522, lng: -118.2437 };
 
 export default function SpotFinder(props) {
   // // Check if there is a user logged in, if not, redirect to registration page:
@@ -71,7 +71,7 @@ export default function SpotFinder(props) {
       <div>
         <GoogleMap
           mapContainerClassName='map'
-          zoom={8}
+          zoom={10}
           center={center}
           onLoad={onMapLoad}
         >
@@ -100,7 +100,8 @@ export default function SpotFinder(props) {
                 onCloseClick={() => { setSelected(null); }}>
                 <div>
                   <div className='info-img-cont'>
-                    <a href={`#home?spotId=${selected.spotId}`}>
+                    <a href={`#spots?spotId=${selected.spotId}`}>
+                      <h1>{selected.eventName}</h1>
                       <img
                         className='info-img'
                         src={selected.photoUrl}

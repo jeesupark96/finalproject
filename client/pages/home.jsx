@@ -15,17 +15,18 @@ export default class Catalog extends React.Component {
     fetch('/api/spots')
       .then(res => res.json())
       .then(spots =>
-
         this.setState({ spots }))
       .catch(err => {
         console.log('Error Reading Data' + err);
       });
+
   }
 
   render() {
     const { spots } = this.state;
     return (
       <Container className='feed-cont'>
+        <h1></h1>
         <Row className='pt-5'>
           <Col>
             {spots.map(spots => (
@@ -45,6 +46,6 @@ export default class Catalog extends React.Component {
         </Row>
       </Container>
     );
-
   }
+
 }
