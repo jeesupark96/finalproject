@@ -1,12 +1,12 @@
 require('dotenv/config');
 const db = require('./db');
-const sharp = require('sharp');
-const path = require('path');
 const express = require('express');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const ClientError = require('./public/ client-error');
 const uploadsMiddleware = require('./uploads-middleware');
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 
 const app = express();
 
@@ -64,15 +64,18 @@ app.get('/api/spots/:spotId', (req, res, next) => {
     })
     .catch(err => next(err));
 });
-app.post('/api/post-pin', uploadsMiddleware, (req, res, next) => {
-  const { title, name, description, lat, lng, userId } = req.body;
 
-  if (!title) {
-    throw new ClientError(400, 'street art title is a required field');
+app.post('/api/spots', jsonParser, (req, res, next) => {
+  console.log('hello ');
+
+  const { eventName, description, lat, lng } = req.body;
+  console.log(req.body);
+  if (!eventName) {
+    throw new ClientError(400, 'spot title is a required field');
   }
-  if (!name) {
-    throw new ClientError(400, 'artist name or tag is a required field');
-  }
+  // if (!name) {
+  //   throw new ClientError(400, ' name or tag is a required field');
+  // }
   if (!description) {
     throw new ClientError(
       400,
@@ -85,60 +88,39 @@ app.post('/api/post-pin', uploadsMiddleware, (req, res, next) => {
       'lat and lng are required fields and must be numerical values'
     );
   }
-  if (!userId | userId < 0) {
-    throw new ClientError(
-      400,
-      'a valid userId is required, please sign in or create an account'
-    );
-  }
-  if (!req.file) {
-    throw new ClientError(400, 'an image upload is required');
-  }
+  // if (!userId | userId < 0) {
+  //   throw new ClientError(
+  //     400,
+  //     'a valid userId is required, please sign in or create an account'
+  //   );
+  // }
+  // if (!req.file) {
+  //  throw new ClientError(400, 'an image upload is required');
+  // }
 
-  // Resize and compress image uploads using sharp:
-  const { filename: image } = req.file;
+  // const url = `/images/${req.file.filename}`;
 
-  sharp(req.file.path)
-    .resize({ width: 1000, withoutEnlargement: true })
-    .rotate()
-    .jpeg({ force: false, mozjpeg: true })
-    .png({ force: false, quality: 70 })
-    .webp({ force: false, quality: 70 })
-    .toFile(
-      path.resolve(req.file.destination, 'resized', image)
-    )
-    .then(data => {
-      const url = `/images/resized/${req.file.filename}`;
-
-      const sql = `
-      INSERT INTO "posts"
+  const sql = `
+      INSERT INTO "spots"
         (
-          "title",
-          "firstName",
-          "photoUrl",
+          "eventName",
           "description",
           "lat",
-          "lng",
-          "userId"
+          "lng"
         )
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      VALUES ($1, $2, $3, $4)
       RETURNING *;
     `;
-      const params = [title, name, url, description, lat, lng, userId];
+  const params = [eventName, description, lat, lng];
 
-      return db.query(sql, params);
-    })
+  db.query(sql, params)
     .then(response => {
       const [spots] = response.rows;
       res.status(201).json(spots);
     })
     .catch(err => next(err));
 });
-app.listen(3000, (req, res) => {
 
-  // eslint-disable-next-line no-console
-  console.log('Listening at Port 3000');
-});
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

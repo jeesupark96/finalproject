@@ -8,8 +8,7 @@ export default class NewSpotForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
-      name: '',
+      eventName: '',
       description: '',
       marker: {},
       isLoading: false,
@@ -48,7 +47,7 @@ export default class NewSpotForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { title, name, description, marker, formErrors } = this.state;
+    const { eventName, description, marker, formErrors } = this.state;
     let errorsPresent = false;
 
     // Clear any error messages from a previously failed form submission:
@@ -57,41 +56,41 @@ export default class NewSpotForm extends React.Component {
     }
 
     // Check for empty fields and display error message where applicable:
-    if (!title || !checkAlphanumeric(title)) {
+    if (!eventName || !checkAlphanumeric(eventName)) {
       this.setState(oldState => ({
         formErrors: {
           ...oldState.formErrors,
-          titleError: 'Street Art Title is a required field'
+          titleError: 'Title is a required field'
         },
         isLoading: false
       }));
       errorsPresent = true;
     }
-    if (!name || !checkAlphanumeric(name)) {
-      this.setState(oldState => ({
-        formErrors: {
-          ...oldState.formErrors,
-          nameError: 'name Name or Tag is a required field'
-        },
-        isLoading: false
-      }));
-      errorsPresent = true;
-    }
-    if (!this.fileInputRef.current.files[0]) {
-      this.setState(oldState => ({
-        formErrors: {
-          ...oldState.formErrors,
-          imageError: 'A Street Art Photo upload is required'
-        },
-        isLoading: false
-      }));
-      errorsPresent = true;
-    }
+    // if (!name || !checkAlphanumeric(name)) {
+    //   this.setState(oldState => ({
+    //     formErrors: {
+    //       ...oldState.formErrors,
+    //       nameError: 'name Name or Tag is a required field'
+    //     },
+    //     isLoading: false
+    //   }));
+    //   errorsPresent = true;
+    // }
+    // if (!this.fileInputRef.current.files[0]) {
+    //   this.setState(oldState => ({
+    //     formErrors: {
+    //       ...oldState.formErrors,
+    //       imageError: 'A Photo upload is required'
+    //     },
+    //     isLoading: false
+    //   }));
+    //   errorsPresent = true;
+    // }
     if (!description || !checkAlphanumeric(description)) {
       this.setState(oldState => ({
         formErrors: {
           ...oldState.formErrors,
-          descriptionError: 'Description or descriptionrmation about City Canvas pin is required'
+          descriptionError: 'Description or information about the spot is required'
         },
         isLoading: false
       }));
@@ -108,36 +107,41 @@ export default class NewSpotForm extends React.Component {
       errorsPresent = true;
     }
     if (!errorsPresent) {
-      const formData = new FormData();
-      formData.append('title', title);
-      formData.append('name', name);
-      formData.append('description', description);
-      formData.append('lat', marker.lat);
-      formData.append('lng', marker.lng);
-      formData.append('image', this.fileInputRef.current.files[0]);
-      formData.append('userId', this.props.user);
+      const data = {
+        eventName,
+        description,
+        lat: marker.lat,
+        lng: marker.lng
+      };
+
+      // formData.append('eventName', eventName);
+      // formData.append('description', description);
+      // formData.append('lat', marker.lat);
+      // formData.append('lng', marker.lng);
+      /// / formData.append('image', this.fileInputRef.current.files[0]);
+      // formData.append('userId', this.props.user);
 
       const req = {
         method: 'POST',
-        body: formData
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       };
-      fetch('/api/spots/', req)
-        .then(res => { res.json()})
-        .then(this.setState({
-          title: '',
-          name: '',
-          description: '',
-          marker: {},
-          internalError: false,
-          formErrors: {}
-        })
-      this.fileInputRef.current.value = null;
-      window.location.hash = 'my-canvas';
-    }
-          );
-  })
+      fetch('/api/spots', req)
+        .then(res => res.json())
+        .then(res => {
 
-            )
+          this.setState({
+            eventName: '',
+            description: '',
+            marker: {},
+            internalError: false,
+            formErrors: {}
+          });
+
+        }
+        )
         .catch(err => {
           console.error('Fetch Failed!', err);
           this.setState({ networkError: true });
@@ -153,55 +157,22 @@ export default class NewSpotForm extends React.Component {
       <Container className='form-container px-0'>
         <Form className='position-relative  pb-2' onSubmit={handleSubmit}>
 
-          <Form.Label className='mt-2' htmlFor='title'>
+          <Form.Label className='mt-2' htmlFor='eventName'>
             Spot Title:
           </Form.Label>
           <Form.Control
             autoFocus
             required
-            id='title'
+            id='eventName'
             type='text'
-            name='title'
-            value={state.title}
+            name='eventName'
+            value={state.eventName}
             placeholder='Enter Title, or "Unknown"'
             onChange={handleChange}
             aria-describedby='titleErrorMessage'
           />
           {formErrors.titleError
             ? errorMessage(formErrors.titleError, 'titleErrorMessage')
-            : null
-          }
-
-          <Form.Label htmlFor='name'>
-            name Name or Tag:
-          </Form.Label>
-          <Form.Control
-            required
-            id='name'
-            type='text'
-            name='name'
-            value={state.name}
-            placeholder='Enter name Name or Tag, or "Unknown"'
-            onChange={handleChange}
-            aria-describedby='nameErrorMessage'
-          />
-          {formErrors.nameError
-            ? errorMessage(formErrors.nameError, 'nameErrorMessage')
-            : null
-          }
-
-          <Form.Label>Food & Spot Photo:</Form.Label>
-          <Form.Control
-            required
-            id='image'
-            type='file'
-            name='image'
-            ref={this.fileInputRef}
-            accept='.png, .jpg, .jpeg, .webp'
-            aria-describedby='imageErrorMessage'
-          />
-          {formErrors.imageError
-            ? errorMessage(formErrors.imageError, 'imageErrorMessage')
             : null
           }
 
@@ -215,7 +186,7 @@ export default class NewSpotForm extends React.Component {
             name='description'
             value={state.description}
             rows={4}
-            placeholder='Add some descriptionrmation about this pin...'
+            placeholder='Add some description about this spot...'
             onChange={handleChange}
             aria-describedby='descriptionErrorMessage'
           />
@@ -250,3 +221,5 @@ export default class NewSpotForm extends React.Component {
     );
   }
 }
+
+NewSpotForm.contextType = AppContext;

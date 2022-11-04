@@ -15,11 +15,10 @@ CREATE TABLE "users" (
 );
 CREATE TABLE "spots" (
     "spotId" serial NOT NULL,
-    "userId" integer NOT NULL,
+   /* "userId" integer NOT NULL,*/
     "eventName" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "createdAt" timestamptz NOT NULL default now(),
-    "photoUrl" text NOT NULL,
     "lat" TEXT NOT NULL,
     "lng" TEXT NOT NULL,
     CONSTRAINT "spots_pk" PRIMARY KEY ("spotId")

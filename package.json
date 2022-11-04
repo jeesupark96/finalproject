@@ -26,11 +26,13 @@
     "argon2": "^0.28.3",
     "babel-loader": "^8.2.5",
     "babel-plugin-macros": "^3.1.0",
+    "body-parser": "^1.20.1",
     "boostrap": "^2.0.0",
     "cors": "^2.8.5",
     "date-fns": "^2.28.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.5-lts.1",
     "pg": "^8.6.0",
     "react": "^17.0.2",
     "react-bootstrap": "^2.3.0",
@@ -60,5 +62,15 @@
     "webpack": "^5.68.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.7.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeesupark96/finalproject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeesupark96/finalproject/issues"
+  },
+  "homepage": "https://github.com/jeesupark96/finalproject#readme"
 }
