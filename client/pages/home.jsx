@@ -32,7 +32,7 @@ export default class Catalog extends React.Component {
             {spots.map(spots => (
               <PostCard
                 key={spots.userId}
-                title={spots.eventName}
+                title={spots.eventName}x
                 photoUrl={spots.photoUrl}
                 description={spots.description}
                 userName={spots.firstName}

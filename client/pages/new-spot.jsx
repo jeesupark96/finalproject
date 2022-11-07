@@ -114,13 +114,6 @@ export default class NewSpotForm extends React.Component {
         lng: marker.lng
       };
 
-      // formData.append('eventName', eventName);
-      // formData.append('description', description);
-      // formData.append('lat', marker.lat);
-      // formData.append('lng', marker.lng);
-      /// / formData.append('image', this.fileInputRef.current.files[0]);
-      // formData.append('userId', this.props.user);
-
       const req = {
         method: 'POST',
         body: JSON.stringify(data),
