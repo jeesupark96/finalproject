@@ -42,7 +42,7 @@ export default function PostCard(props) {
               </Card.Text>
               <Image
                 className='profile-pic sec-bk-color'
-                src={props.photoUrl}>
+                src={props.photoFile}>
               </Image>
             </Container>
           </Container>

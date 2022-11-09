@@ -72,5 +72,6 @@
   "bugs": {
     "url": "https://github.com/jeesupark96/finalproject/issues"
   },
-  "homepage": "https://github.com/jeesupark96/finalproject#readme"
+  "homepage": "https://github.com/jeesupark96/finalproject#readme",
+  "proxy":"http://localhost:3001/"
 }

@@ -15,9 +15,10 @@ CREATE TABLE "users" (
 );
 CREATE TABLE "spots" (
     "spotId" serial NOT NULL,
-   /* "userId" integer NOT NULL,*/
+    "userId" TEXT NOT NULL,
     "eventName" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "photoFile" text NOT NULL,
     "createdAt" timestamptz NOT NULL default now(),
     "lat" TEXT NOT NULL,
     "lng" TEXT NOT NULL,

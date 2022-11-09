@@ -14,8 +14,7 @@ export default class Catalog extends React.Component {
 
     fetch('/api/spots')
       .then(res => res.json())
-      .then(spots =>
-        this.setState({ spots }))
+      .then(spots => this.setState({ spots }))
       .catch(err => {
         console.log('Error Reading Data' + err);
       });
@@ -32,13 +31,13 @@ export default class Catalog extends React.Component {
             {spots.map(spots => (
               <PostCard
                 key={spots.userId}
-                title={spots.eventName}x
-                photoUrl={spots.photoUrl}
+                title={spots.eventName}
+                photoFile={spots.photoFile}
                 description={spots.description}
                 userName={spots.firstName}
                 button='View More'
                 href={`${spots.spotId}`}
-                saver={spots.saver}
+               saver={spots.saver}
                 reported={spots.reported}
               />
             ))}

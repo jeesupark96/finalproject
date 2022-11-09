@@ -4,13 +4,13 @@ const express = require('express');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const ClientError = require('./public/ client-error');
-const uploadsMiddleware = require('./uploads-middleware');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-
+const jsonMiddleware = express.json();
 const app = express();
-
 app.use(staticMiddleware);
+app.use(jsonMiddleware);
+app.use(errorMiddleware);
 
 app.get('/api/spots', (req, res, next) => {
   const sql = `
@@ -18,7 +18,7 @@ app.get('/api/spots', (req, res, next) => {
      "s"."spotId",
      "s"."eventName",
      "s"."description",
-     "s"."photoUrl",
+     "s"."photoFile",
      "s"."createdAt",
      "s"."userId" as "name",
      "u"."firstName",
@@ -41,14 +41,15 @@ app.get('/api/spots/:spotId', (req, res, next) => {
     throw new ClientError(400, 'spotId must be a positive integer');
   }
   const sql = `
-    select "s"."eventName",
-           "s"."photoUrl",
-           "s"."description",
-           "s"."userId" as "name",
-           "s"."spotId",
-           "u"."userId",
-           "u"."firstName",
-           "u"."lastName"
+    select
+        "s"."eventName",
+        "s"."photoFile",
+        "s"."description",
+        "s"."userId" as "name",
+        "s"."spotId",
+        "u"."userId",
+        "u"."firstName",
+        "u"."lastName"
       from "spots" as "s"
       join "users" as "u" using ("userId")
       where "spotId" = $1
@@ -68,7 +69,7 @@ app.get('/api/spots/:spotId', (req, res, next) => {
 app.post('/api/spots', jsonParser, (req, res, next) => {
   console.log('hello ');
 
-  const { eventName, description, lat, lng } = req.body;
+  const { eventName, description, photoFile, lat, lng } = req.body;
   console.log(req.body);
   if (!eventName) {
     throw new ClientError(400, 'spot title is a required field');
@@ -94,24 +95,25 @@ app.post('/api/spots', jsonParser, (req, res, next) => {
   //     'a valid userId is required, please sign in or create an account'
   //   );
   // }
-  // if (!req.file) {
-  //  throw new ClientError(400, 'an image upload is required');
-  // }
-
+  if (!req.file) {
+    throw new ClientError(400, 'an image upload is required');
+  }
   // const url = `/images/${req.file.filename}`;
 
   const sql = `
       INSERT INTO "spots"
         (
+          "userId",
           "eventName",
+          "photoFile",
           "description",
           "lat",
           "lng"
         )
-      VALUES ($1, $2, $3, $4)
+      VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
     `;
-  const params = [eventName, description, lat, lng];
+  const params = [eventName, photoFile, description, lat, lng];
 
   db.query(sql, params)
     .then(response => {
@@ -119,11 +121,9 @@ app.post('/api/spots', jsonParser, (req, res, next) => {
       res.status(201).json(spots);
     })
     .catch(err => next(err));
-});
 
-app.use(errorMiddleware);
-
-app.listen(process.env.PORT, () => {
+  app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
-  console.log('Listening on port', process.env.PORT);
+    console.log('Listening on port', process.env.PORT);
+  });
 });
