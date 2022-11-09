@@ -69,7 +69,7 @@ app.get('/api/spots/:spotId', (req, res, next) => {
 app.post('/api/spots', jsonParser, (req, res, next) => {
   console.log('hello ');
 
-  const { eventName, description, photoFile, lat, lng } = req.body;
+  const { eventName, userId, description, photoFile, lat, lng } = req.body;
   console.log(req.body);
   if (!eventName) {
     throw new ClientError(400, 'spot title is a required field');
@@ -89,12 +89,12 @@ app.post('/api/spots', jsonParser, (req, res, next) => {
       'lat and lng are required fields and must be numerical values'
     );
   }
-  // if (!userId | userId < 0) {
-  //   throw new ClientError(
-  //     400,
-  //     'a valid userId is required, please sign in or create an account'
-  //   );
-  // }
+  if (!userId | userId < 0) {
+    throw new ClientError(
+      400,
+      'a valid userId is required, please sign in or create an account'
+    );
+  }
   if (!req.file) {
     throw new ClientError(400, 'an image upload is required');
   }
@@ -113,7 +113,7 @@ app.post('/api/spots', jsonParser, (req, res, next) => {
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
     `;
-  const params = [eventName, photoFile, description, lat, lng];
+  const params = [eventName, userId, photoFile, description, lat, lng];
 
   db.query(sql, params)
     .then(response => {

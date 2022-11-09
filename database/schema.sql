@@ -15,7 +15,7 @@ CREATE TABLE "users" (
 );
 CREATE TABLE "spots" (
     "spotId" serial NOT NULL,
-    "userId" TEXT NOT NULL,
+    "userId" INTEGER NOT NULL,
     "eventName" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "photoFile" text NOT NULL,
