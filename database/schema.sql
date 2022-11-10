@@ -18,7 +18,7 @@ CREATE TABLE "spots" (
     "userId" INTEGER NOT NULL,
     "eventName" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "photoFile" text NOT NULL,
+    "photoFile" TEXT,
     "createdAt" timestamptz NOT NULL default now(),
     "lat" TEXT NOT NULL,
     "lng" TEXT NOT NULL,

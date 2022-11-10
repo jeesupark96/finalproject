@@ -109,11 +109,11 @@ export default class NewSpotForm extends React.Component {
     }
     if (!errorsPresent) {
       const formData = new FormData();
-      formData.append('title', eventName);
+      formData.append('eventName', eventName);
       formData.append('image', this.fileInputRef.current.files[0]);
       formData.append('description', description);
-      formData.append('lat', marker.lat);
-      formData.append('lng', marker.lng);
+      formData.append('lat', parseInt(marker.lat));
+      formData.append('lng', parseInt(marker.lng));
       formData.append('userId', userId);
 
       const req = {
@@ -124,12 +124,13 @@ export default class NewSpotForm extends React.Component {
       fetch('/api/spots', req)
         .then(res => res.json())
         .then(res => {
-
+          console.log(res);
           this.setState({
             eventName: '',
-            photoFile: '',
+            photoFile: 'asdf',
             description: '',
             marker: {},
+            userId,
             internalError: false,
             formErrors: {}
           });
@@ -152,16 +153,16 @@ export default class NewSpotForm extends React.Component {
       <Container className='form-container px-0'>
         <Form className='position-relative  pb-2' onSubmit={handleSubmit}>
 
-          <Form.Label className='mt-2' htmlFor='eventName'>
+          <Form.Label className='mt-2' htmlFor='title'>
             Spot Title:
           </Form.Label>
           <Form.Control
             autoFocus
             required
-            id='eventName'
+            id='title'
             type='text'
             name='eventName'
-            value={state.eventName}
+            value={this.state.eventName}
             placeholder='Enter Title, or "Unknown"'
             onChange={handleChange}
             aria-describedby='titleErrorMessage'

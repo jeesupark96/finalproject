@@ -1,4 +1,5 @@
 import React from 'react';
+import MapDetails from './moredetailsmap';
 
 const styles = {
   image: {
@@ -29,8 +30,9 @@ export default class SpotDetails extends React.Component {
   render() {
     if (!this.state.spots) return null;
     const {
-      eventName, photoUrl, description, firstName, lastName
+      eventName, photoFile, description, firstName, lastName, lat, lng, spotId
     } = this.state.spots;
+    console.log();
     return (
       <div className="container">
         <div className="card shadow-sm">
@@ -48,7 +50,7 @@ export default class SpotDetails extends React.Component {
             </div>
             <div className="row mb-4">
               <div className="col-12 col-sm-6 col-md-5">
-                <img src={photoUrl} alt={name} style={styles.image} />
+                <img src={photoFile} alt={name} style={styles.image} />
               </div>
               <div className="col-12 col-sm-6 col-md-7">
                 <h2>{eventName}</h2>
@@ -61,6 +63,17 @@ export default class SpotDetails extends React.Component {
                   {}
                 </p>
               </div>
+            </div>
+            <div>
+      <MapDetails
+      spotId={spotId}
+      position={{ lat, lng }}
+      eventName={eventName}
+      photoFile={photoFile}
+      name={firstName + ' ' + lastName}
+      >
+
+      </MapDetails>
             </div>
           </div>
         </div>

@@ -8,9 +8,10 @@ const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const jsonMiddleware = express.json();
 const app = express();
+const uploadsMiddleware = require('./uploads-middleware');
+
 app.use(staticMiddleware);
 app.use(jsonMiddleware);
-app.use(errorMiddleware);
 
 app.get('/api/spots', (req, res, next) => {
   const sql = `
@@ -49,7 +50,9 @@ app.get('/api/spots/:spotId', (req, res, next) => {
         "s"."spotId",
         "u"."userId",
         "u"."firstName",
-        "u"."lastName"
+        "u"."lastName",
+        "s"."lat",
+        "s"."lng"
       from "spots" as "s"
       join "users" as "u" using ("userId")
       where "spotId" = $1
@@ -66,7 +69,7 @@ app.get('/api/spots/:spotId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/spots', jsonParser, (req, res, next) => {
+app.post('/api/spots', uploadsMiddleware, (req, res, next) => {
   console.log('hello ');
 
   const { eventName, userId, description, photoFile, lat, lng } = req.body;
@@ -103,12 +106,12 @@ app.post('/api/spots', jsonParser, (req, res, next) => {
   const sql = `
       INSERT INTO "spots"
         (
-          "userId",
           "eventName",
-          "photoFile",
           "description",
+          "photoFile",
           "lat",
-          "lng"
+          "lng",
+          "userId"
         )
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
@@ -121,9 +124,11 @@ app.post('/api/spots', jsonParser, (req, res, next) => {
       res.status(201).json(spots);
     })
     .catch(err => next(err));
+  console.log(sql);
+});
+app.use(errorMiddleware);
 
-  app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
-    console.log('Listening on port', process.env.PORT);
-  });
+  console.log(`Listening on port, ${process.env.PORT}`);
 });

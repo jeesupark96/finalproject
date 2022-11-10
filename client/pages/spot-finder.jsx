@@ -50,7 +50,7 @@ export default function SpotFinder(props) {
       <button type='button' onClick={() => {
         navigator.geolocation.getCurrentPosition(position => {
           panTo({
-            lat: position.coords.latitude, lng: position.coords.longitude
+            lat: spots.latitude, lng: position.coords.longitude
           });
         }, () => null);
       }}>
@@ -101,10 +101,11 @@ export default function SpotFinder(props) {
                 <div>
                   <div className='info-img-cont'>
                     <a href={`#spots?spotId=${selected.spotId}`}>
+                      <h1>{selected.firstName}</h1>
                       <h1>{selected.eventName}</h1>
                       <img
                         className='info-img'
-                        src={selected.photoUrl}
+                        src={selected.photoFile}
                       ></img>
                     </a>
                   </div>
