@@ -1,5 +1,8 @@
 import React from 'react';
 import MapDetails from './moredetailsmap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import ModalDelete from './modal-delete';
 
 const styles = {
   image: {
@@ -16,25 +19,49 @@ export default class SpotDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      spots: null
+      spots: null,
+      show: false
     };
+    this.ModalShow = this.ModalShow.bind(this);
   }
 
   componentDidMount() {
-    console.log(this.props.spotId);
     fetch(`/api/spots/${this.props.spotId}`)
       .then(res => res.json())
       .then(spots => this.setState({ spots }));
   }
 
+  ModalShow() {
+    this.setState({ show: true });
+  }
+
+  ModalHide() {
+    this.setState({ show: false });
+  }
+
   render() {
+    let show = true;
+    let hide = false;
+    if (this.state.show === false) {
+      show = false;
+      hide = true;
+    } else {
+      show = true;
+      hide = false;
+    }
+
     if (!this.state.spots) return null;
     const {
       eventName, photoFile, description, firstName, lastName, lat, lng, spotId
     } = this.state.spots;
-    console.log();
     return (
       <div className="container">
+        <div>
+          <ModalDelete
+          show={show}
+          onHide={hide} >
+          </ModalDelete>
+        </div>
         <div className="card shadow-sm">
           <div className="card-body">
             <div className="row">
@@ -49,6 +76,12 @@ export default class SpotDetails extends React.Component {
               <h1>{firstName + ' ' + lastName}</h1>
             </div>
             <div className="row mb-4">
+              <FontAwesomeIcon
+              icon={(faTrash)}
+                onClick={(this.ModalShow)}
+               >
+            </FontAwesomeIcon>
+
               <div className="col-12 col-sm-6 col-md-5">
                 <img src={photoFile} alt={name} style={styles.image} />
               </div>
@@ -64,6 +97,7 @@ export default class SpotDetails extends React.Component {
                 </p>
               </div>
             </div>
+
             <div>
       <MapDetails
       spotId={spotId}
@@ -74,10 +108,14 @@ export default class SpotDetails extends React.Component {
       >
 
       </MapDetails>
+
             </div>
           </div>
         </div>
+        <ModalDelete ></ModalDelete>
       </div>
     );
+
   }
+
 }

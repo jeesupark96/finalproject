@@ -9,13 +9,13 @@ export default class NewSpotForm extends React.Component {
     super(props);
     this.state = {
       eventName: '',
-      photoFile: '',
       description: '',
       marker: {},
+      userId: 1,
       isLoading: false,
       networkError: false,
       formErrors: {},
-      userId: 1
+      show: false
     };
 
     this.errorMessage = this.errorMessage.bind(this);
@@ -25,7 +25,6 @@ export default class NewSpotForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // Display form field error to user when field doesn't meet requirements:
   errorMessage(message, idName) {
     if (message) {
       return (
@@ -36,14 +35,13 @@ export default class NewSpotForm extends React.Component {
     }
   }
 
-  // Update state with form field changes:
+  setMarker(marker) {
+    this.setState({ marker });
+  }
+
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
-  }
-
-  setMarker(marker) {
-    this.setState({ marker });
   }
 
   handleSubmit(event) {
@@ -51,12 +49,9 @@ export default class NewSpotForm extends React.Component {
     const { eventName, description, userId, marker, formErrors } = this.state;
     let errorsPresent = false;
 
-    // Clear any error messages from a previously failed form submission:
     if (formErrors) {
       this.setState({ formErrors: {} });
     }
-
-    // Check for empty fields and display error message where applicable:
     if (!eventName || !checkAlphanumeric(eventName)) {
       this.setState(oldState => ({
         formErrors: {
@@ -110,16 +105,15 @@ export default class NewSpotForm extends React.Component {
     if (!errorsPresent) {
       const formData = new FormData();
       formData.append('eventName', eventName);
-      formData.append('image', this.fileInputRef.current.files[0]);
       formData.append('description', description);
+      formData.append('photoFile', this.fileInputRef.current.files[0]);
       formData.append('lat', parseInt(marker.lat));
       formData.append('lng', parseInt(marker.lng));
-      formData.append('userId', userId);
+      formData.append('userId', parseInt(userId));
 
       const req = {
         method: 'POST',
         body: formData
-
       };
       fetch('/api/spots', req)
         .then(res => res.json())
@@ -127,10 +121,9 @@ export default class NewSpotForm extends React.Component {
           console.log(res);
           this.setState({
             eventName: '',
-            photoFile: 'asdf',
             description: '',
             marker: {},
-            userId,
+            userId: 1,
             internalError: false,
             formErrors: {}
           });
@@ -195,11 +188,11 @@ export default class NewSpotForm extends React.Component {
           <Form.Label>Food & Spot Photo:</Form.Label>
           <Form.Control
             required
-            id='image'
             type='file'
-            name='image'
+            name='photoFile'
+            id="photFile"
             ref={this.fileInputRef}
-            accept='.png, .jpg, .jpeg, .webp'
+            accept=".png, .jpg, .jpeg, .webp"
             aria-describedby='imageErrorMessage'
           />
           {formErrors.imageError

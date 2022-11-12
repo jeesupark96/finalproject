@@ -108,3 +108,12 @@ ul {
   height: 200px;
   width: 300px;
 }
+
+.show {
+  position: absolute;
+  bottom: -30px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}

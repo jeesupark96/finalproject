@@ -72,7 +72,7 @@ app.get('/api/spots/:spotId', (req, res, next) => {
 app.post('/api/spots', uploadsMiddleware, (req, res, next) => {
   console.log('hello ');
 
-  const { eventName, userId, description, photoFile, lat, lng } = req.body;
+  const { eventName, userId, spotId, description, lat, lng } = req.body;
   console.log(req.body);
   if (!eventName) {
     throw new ClientError(400, 'spot title is a required field');
@@ -99,9 +99,10 @@ app.post('/api/spots', uploadsMiddleware, (req, res, next) => {
     );
   }
   if (!req.file) {
+    console.log(req.file);
     throw new ClientError(400, 'an image upload is required');
   }
-  // const url = `/images/${req.file.filename}`;
+  const url = `/images/${req.file.filename}`;
 
   const sql = `
       INSERT INTO "spots"
@@ -116,16 +117,53 @@ app.post('/api/spots', uploadsMiddleware, (req, res, next) => {
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
     `;
-  const params = [eventName, userId, photoFile, description, lat, lng];
+  const params = [eventName, description, url, lat, lng, userId];
 
   db.query(sql, params)
     .then(response => {
-      const [spots] = response.rows;
+      const spots = response.rows;
       res.status(201).json(spots);
     })
     .catch(err => next(err));
   console.log(sql);
 });
+
+app.delete('/api/spots/:spotId', (req, res, next) => {
+  const { userId } = req.body;
+  const spotId = Number(req.params.spotId);
+
+  if (!spotId || spotId < 0 || isNaN(spotId)) {
+    throw new ClientError(400, 'postId must be a positive integer');
+  }
+
+  if (!userId || userId < 0 || isNaN(userId)) {
+    throw new ClientError(400, 'invalid userId, please sign in or create an account');
+  }
+
+  const sql = `
+  DELETE FROM "spots"
+    WHERE
+      "spotId" = $1
+      AND "userId" = $2
+  RETURNING *;
+  `;
+  const params = [spotId, userId];
+
+  db.query(sql, params)
+    .then(response => {
+      const [deleted] = response.rows;
+      if (!deleted) {
+        throw new ClientError(
+          404,
+          'This isn\'t the spot you\'re looking for.'
+        );
+      }
+      res.sendStatus(204);
+    })
+    .catch(err => next(err));
+  res.json(newarray);
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

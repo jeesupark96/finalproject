@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tooltip, OverlayTrigger, Container, Row } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import {
   GoogleMap,
   useLoadScript,
@@ -31,7 +31,7 @@ export default function MapDetails(props) {
 
   /* Establish starting coordinates, use useMemo hook to prevent rerendering on
   click: */
-  const center = React.useMemo(() => ({ lat: 34.0522, lng: -118.2437 }), []);
+  React.useMemo(() => ({ lat: 34.0522, lng: -118.2437 }), []);
   /* Set map options to add custom style and limit points of interest on map
   (fullscreen not supported on iOS): */
   const options = React.useMemo(() => ({
@@ -82,7 +82,6 @@ export default function MapDetails(props) {
     );
   }
 
-  console.log(props);
   if (isLoaded) {
     return (
 
@@ -106,7 +105,6 @@ export default function MapDetails(props) {
               onClick={() => {
 
                 setSelected(spots);
-                console.log(selected);
               }}
             />
 
