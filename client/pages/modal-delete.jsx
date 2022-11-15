@@ -19,7 +19,7 @@ export default function ModalDelete(props) {
         <Modal.Footer className='position-relative pt-3 pb-4'>
           <Button
             className='cancel'
-            onClick={props.onHide}
+            onClick={props.close}
             disabled={props.isLoading}
           >
             Cancel

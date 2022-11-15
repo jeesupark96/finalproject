@@ -161,7 +161,6 @@ app.delete('/api/spots/:spotId', (req, res, next) => {
       res.sendStatus(204);
     })
     .catch(err => next(err));
-  res.json(newarray);
 });
 
 app.use(errorMiddleware);

@@ -14,8 +14,7 @@ export default class NewSpotForm extends React.Component {
       userId: 1,
       isLoading: false,
       networkError: false,
-      formErrors: {},
-      show: false
+      formErrors: {}
     };
 
     this.errorMessage = this.errorMessage.bind(this);

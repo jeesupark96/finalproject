@@ -23,6 +23,7 @@ export default class SpotDetails extends React.Component {
       show: false
     };
     this.ModalShow = this.ModalShow.bind(this);
+    this.ModalHide = this.ModalHide.bind(this);
   }
 
   componentDidMount() {
@@ -39,15 +40,29 @@ export default class SpotDetails extends React.Component {
     this.setState({ show: false });
   }
 
+  DeleteMe() {
+    const req = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    fetch(`/api/spots/${this.props.spotId}`, req)
+      .then(res => res.json())
+      .then(spots => this.setState({ spots }));
+  }
+
   render() {
     let show = true;
     let hide = false;
     if (this.state.show === false) {
       show = false;
       hide = true;
+      console.log('true');
     } else {
       show = true;
       hide = false;
+      console.log('false');
     }
 
     if (!this.state.spots) return null;
@@ -59,7 +74,10 @@ export default class SpotDetails extends React.Component {
         <div>
           <ModalDelete
           show={show}
-          onHide={hide} >
+          onHide={this.ModalHide}
+          close={this.ModalHide}
+          DeleteMe={this.DeleteMe} >
+
           </ModalDelete>
         </div>
         <div className="card shadow-sm">
@@ -93,7 +111,7 @@ export default class SpotDetails extends React.Component {
             <div className="row">
               <div className="col">
                 <p style={styles.longDescription}>
-                  {}
+
                 </p>
               </div>
             </div>
@@ -112,7 +130,6 @@ export default class SpotDetails extends React.Component {
             </div>
           </div>
         </div>
-        <ModalDelete ></ModalDelete>
       </div>
     );
 
