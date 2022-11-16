@@ -26,7 +26,7 @@ export default function ModalDelete(props) {
           </Button>
           <Button
             className='del warning-bk'
-            onClick={props.deletePin}
+            onClick={props.DeleteMe}
             disabled={props.isLoading}
           >
             Delete
