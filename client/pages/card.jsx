@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, Button, Image, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -41,7 +42,7 @@ export default function PostCard(props) {
                 {props.description}
               </Card.Text>
               <Image
-                className='profile-pic sec-bk-color'
+                className='pic sec-bk-color'
                 src={props.photoFile}>
               </Image>
             </Container>

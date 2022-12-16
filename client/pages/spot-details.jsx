@@ -24,6 +24,7 @@ export default class SpotDetails extends React.Component {
     };
     this.ModalShow = this.ModalShow.bind(this);
     this.ModalHide = this.ModalHide.bind(this);
+    this.DeleteMe = this.DeleteMe.bind(this);
   }
 
   componentDidMount() {

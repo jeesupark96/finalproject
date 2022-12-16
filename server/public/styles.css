@@ -117,3 +117,9 @@ ul {
   left: 0;
   right: 0;
 }
+
+.pic {
+  width: 20px;
+  border-style: dashed;
+  background-color: black;
+}

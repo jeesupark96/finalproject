@@ -37,6 +37,8 @@
     "react": "^17.0.2",
     "react-bootstrap": "^2.3.0",
     "react-dom": "^17.0.2",
+    "react-image-file-resizer": "^0.4.8",
+    "react-image-process": "^0.2.4",
     "react-modal": "^3.15.1",
     "use-places-autocomplete": "^2.0.0"
   },
@@ -73,5 +75,5 @@
     "url": "https://github.com/jeesupark96/finalproject/issues"
   },
   "homepage": "https://github.com/jeesupark96/finalproject#readme",
-  "proxy":"http://localhost:3001/"
+  "proxy": "http://localhost:3001/"
 }
