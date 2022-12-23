@@ -10,7 +10,7 @@ export default function PostCard(props) {
     <>
       <Card>
         <div>
-          <FontAwesomeIcon icon={(faBookmark)} />
+          <FontAwesomeIcon icon={(faBookmark)}/>
 
           </div>
         <Card.Img
