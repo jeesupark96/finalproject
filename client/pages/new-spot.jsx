@@ -143,7 +143,7 @@ export default class NewSpotForm extends React.Component {
 
     return (
       <Container className='form-container px-0'>
-        <Form className='position-relative  pb-2' onSubmit={handleSubmit}>
+        <Form className='position-relative  pb-2 w-75' onSubmit={handleSubmit}>
 
           <Form.Label className='mt-2' htmlFor='title'>
             Spot Title:
